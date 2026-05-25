@@ -7,11 +7,11 @@ Chatbot quản lý khách sạn tích hợp Claude AI, PostgreSQL và Facebook M
 
 | Giai đoạn | Nội dung | Trạng thái |
 |-----------|----------|------------|
-| 1 | Setup, Database Schema, Models | ✅ Hoàn thành |
-| 2 | Claude Service + Booking Service | ✅ Hoàn thành |
-| 3 | Facebook Messenger Webhook | ✅ Hoàn thành |
-| 4 | Quản lý Conversation & Context | ✅ Hoàn thành |
-| 5 | Dashboard quản lý + Notifications | ✅ Hoàn thành |
+| 1 | Setup, Database Schema, Models |  |
+| 2 | Claude Service + Booking Service | |
+| 3 | Facebook Messenger Webhook |  |
+| 4 | Quản lý Conversation & Context |  |
+| 5 | Dashboard quản lý + Notifications |  |
 
 ## Cài đặt nhanh (Docker — khuyến nghị)
 
