@@ -1,0 +1,32 @@
+hotel-chatbot/
+├── app/
+│   ├── main.py              # FastAPI entry point
+│   ├── config.py            # Cấu hình env vars
+│   ├── database.py          # PostgreSQL connection
+│   ├── models/              # SQLAlchemy ORM models
+│   │   ├── __init__.py
+│   │   ├── hotel.py         # Hotels, Rooms, RoomTypes
+│   │   ├── booking.py       # Bookings, Guests
+│   │   └── conversation.py  # Chat sessions, Messages
+│   ├── schemas/             # Pydantic schemas (request/response)
+│   │   ├── __init__.py
+│   │   ├── booking.py
+│   │   └── messenger.py
+│   ├── api/                 # API routes
+│   │   ├── __init__.py
+│   │   ├── webhook.py       # Facebook Messenger webhook
+│   │   └── bookings.py      # REST API quản lý booking
+│   ├── services/            # Business logic
+│   │   ├── __init__.py
+│   │   ├── claude_service.py   # Gọi Claude AI
+│   │   ├── booking_service.py  # Logic đặt phòng
+│   │   └── messenger_service.py # Gửi/nhận Messenger
+│   └── core/
+│       ├── __init__.py
+│       └── prompts.py       # System prompts cho Claude
+├── alembic/                 # DB migrations
+├── tests/
+├── .env.example
+├── requirements.txt
+├── docker-compose.yml
+└── README.md
