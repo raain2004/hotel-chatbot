@@ -10,6 +10,10 @@ class Settings(BaseSettings):
     # Database
     database_url: str = "postgresql+asyncpg://hotelbot:hotelbot123@localhost:5432/hotel_chatbot"
 
+    # Redis
+    redis_host: str = "localhost"
+    redis_port: int = 6379
+
     # Claude AI
     anthropic_api_key: str = ""
     claude_model: str = "claude-sonnet-4-20250514"
@@ -25,6 +29,9 @@ class Settings(BaseSettings):
     fb_verify_token: str = "hotel_verify_token"
     fb_app_secret: str = ""
     fb_graph_api_version: str = "v21.0"
+
+    # Monitoring
+    sentry_dsn: str = ""
 
     class Config:
         env_file = ".env"

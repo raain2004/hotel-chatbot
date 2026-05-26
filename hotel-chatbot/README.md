@@ -44,18 +44,32 @@ Chi tiết Meta / ngrok / Python: [docs/CAI_DAT_THU_CONG.md](docs/CAI_DAT_THU_CO
 
 ## API Giai đoạn 4–5 (Admin)
 
-Header: `X-Admin-Key: <ADMIN_API_KEY>`
+### Authentication
 
-| Method | Endpoint | Mô tả |
-|--------|----------|-------|
-| GET | `/api/conversations` | Danh sách hội thoại |
-| GET | `/api/conversations/{id}` | Chi tiết + messages |
-| PATCH | `/api/conversations/{id}/context` | Cập nhật context |
-| PATCH | `/api/conversations/{id}/status` | active / resolved / waiting_human |
-| GET | `/api/dashboard/stats` | Thống kê tổng quan |
-| GET | `/api/dashboard/bookings/recent` | Booking gần đây |
-| GET | `/api/dashboard/notifications` | Thông báo nội bộ |
-| POST | `/api/dashboard/notifications/{id}/read` | Đánh dấu đã đọc |
+Có 2 phương thức xác thực:
+
+1. **JWT Token** (khuyến nghị cho dashboard & production):
+   - Lấy token: `POST /api/auth/token` với body `{"username": "admin", "password": "<ADMIN_API_KEY>"}`
+   - Sử dụng: Header `Authorization: Bearer <token>`
+
+2. **X-Admin-Key** (cho development/testing):
+   - Header: `X-Admin-Key: <ADMIN_API_KEY>`
+   - Chỉ hoạt động khi `APP_ENV=development` hoặc `test`
+
+| Method | Endpoint | Mô tả | Auth Required |
+|--------|----------|-------|---------------|
+| POST | `/api/auth/token` | Login lấy JWT token | ❌ |
+| GET | `/api/auth/me` | Thông tin user hiện tại | ✅ JWT |
+| POST | `/api/auth/refresh` | Làm mới token | ❌ |
+| POST | `/api/auth/logout` | Logout | ✅ JWT |
+| GET | `/api/conversations` | Danh sách hội thoại | ✅ |
+| GET | `/api/conversations/{id}` | Chi tiết + messages | ✅ |
+| PATCH | `/api/conversations/{id}/context` | Cập nhật context | ✅ |
+| PATCH | `/api/conversations/{id}/status` | active / resolved / waiting_human | ✅ |
+| GET | `/api/dashboard/stats` | Thống kê tổng quan | ✅ JWT |
+| GET | `/api/dashboard/bookings/recent` | Booking gần đây | ✅ JWT |
+| GET | `/api/dashboard/notifications` | Thông báo nội bộ | ✅ JWT |
+| POST | `/api/dashboard/notifications/{id}/read` | Đánh dấu đã đọc | ✅ JWT |
 
 ## Chạy tests
 
@@ -134,3 +148,27 @@ hotel-chatbot/
 ├── requirements.txt
 └── .env.example
 ```
+
+## Cập nhật gần đây (v1.1)
+
+### ✅ Đã hoàn thiện
+- **JWT Authentication**: Dashboard API yêu cầu JWT token thay vì chỉ X-Admin-Key
+- **Auth Endpoints**: Thêm `/api/auth/token`, `/api/auth/me`, `/api/auth/refresh`, `/api/auth/logout`
+- **Test Coverage**: 19/19 tests pass (100%)
+- **Security Fix**: Sửa lỗi `verify_jwt_token` không nhận header đúng cách
+
+### 📋 Các tính năng đã có
+- ✅ 5/5 giai đoạn phát triển hoàn thành
+- ✅ Database migrations với Alembic
+- ✅ CI/CD pipeline (GitHub Actions)
+- ✅ Docker & docker-compose
+- ✅ Rate limiting (chưa áp dụng)
+- ✅ Redis caching (chưa sử dụng)
+
+### 🔜 Next Steps (đề xuất)
+1. Áp dụng rate limiting cho API endpoints
+2. Sử dụng Redis cache cho Claude responses
+3. Build admin dashboard UI (React/Vue)
+4. Tích hợp payment gateway (VNPay/Stripe)
+5. Thêm monitoring (Sentry, Prometheus)
+6. Implement token blacklist cho logout

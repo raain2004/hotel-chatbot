@@ -5,6 +5,7 @@ os.environ.setdefault("APP_ENV", "test")
 os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
 os.environ.setdefault("CLAUDE_MOCK_MODE", "true")
 os.environ.setdefault("ADMIN_API_KEY", "test-admin-key")
+os.environ.setdefault("SECRET_KEY", "test-secret-key-for-jwt-testing-minimum-32-chars")
 os.environ.setdefault("FB_APP_SECRET", "")
 
 from decimal import Decimal
@@ -104,4 +105,20 @@ async def client(db_session: AsyncSession):
 
 @pytest.fixture
 def admin_headers():
+    """Return headers with valid admin key for X-Admin-Key authentication."""
+    return {"X-Admin-Key": "test-admin-key"}
+
+
+@pytest.fixture
+def admin_jwt_headers():
+    """Return headers with valid JWT token for Bearer authentication."""
+    from app.core.security import JWTAuth
+    
+    token = JWTAuth.create_token(subject="test_admin", expires_delta=3600)
+    return {"Authorization": f"Bearer {token}"}
+
+
+@pytest.fixture
+def admin_headers_old():
+    """Legacy header format - kept for backward compatibility tests."""
     return {"X-Admin-Key": "test-admin-key"}
