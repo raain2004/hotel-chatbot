@@ -2,7 +2,7 @@
 import time
 import jwt
 from typing import Optional
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Header
 from collections import defaultdict
 from functools import wraps
 
@@ -72,7 +72,7 @@ class RateLimiter:
 rate_limiter = RateLimiter()
 
 
-async def verify_jwt_token(authorization: str = None) -> dict:
+async def verify_jwt_token(authorization: str = Header(None, alias="Authorization")) -> dict:
     """Verify JWT token from Authorization header."""
     if not authorization:
         raise HTTPException(

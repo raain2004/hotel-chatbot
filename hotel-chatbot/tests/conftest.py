@@ -105,7 +105,13 @@ async def client(db_session: AsyncSession):
 
 @pytest.fixture
 def admin_headers():
-    """Return headers with valid JWT token for admin authentication."""
+    """Return headers with valid admin key for X-Admin-Key authentication."""
+    return {"X-Admin-Key": "test-admin-key"}
+
+
+@pytest.fixture
+def admin_jwt_headers():
+    """Return headers with valid JWT token for Bearer authentication."""
     from app.core.security import JWTAuth
     
     token = JWTAuth.create_token(subject="test_admin", expires_delta=3600)
