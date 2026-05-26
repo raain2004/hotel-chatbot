@@ -97,7 +97,7 @@ async def rate_limit_middleware(request: Request, call_next):
 
 from app.api import auth, bookings, chat, conversations, dashboard, dev, webhook
 
-app.include_router(webhook.router, prefix="/webhook", tags=["Messenger Webhook"])
+app.include_router(webhook.router, prefix="/api/v1/webhook/facebook", tags=["Messenger Webhook"])
 app.include_router(bookings.router, prefix="/api/bookings", tags=["Bookings"])
 app.include_router(chat.router, prefix="/api/chat", tags=["Chat"])
 app.include_router(conversations.router, prefix="/api/conversations", tags=["Conversations"])
